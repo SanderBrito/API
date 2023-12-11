@@ -13,6 +13,7 @@
   "paths": {
     "/login": {
       "post": {
+        "summary": "Gera um JWT se as condições de login forem atendidas",
         "description": "",
         "parameters": [
           {
@@ -43,7 +44,7 @@
     },
     "/": {
       "get": {
-        "summary": "Lista de usuarios",
+        "summary": "Método GET para listar usuários por nome ou e-mail",
         "description": "",
         "parameters": [
           {
@@ -64,6 +65,7 @@
         }
       },
       "post": {
+        "summary": "Método PUT para cadastrar um usuário",
         "description": "",
         "parameters": [
           {
@@ -105,6 +107,7 @@
     },
     "/{id}": {
       "get": {
+        "summary": "Método para listar por ID",
         "description": "",
         "parameters": [
           {
@@ -124,6 +127,7 @@
         }
       },
       "put": {
+        "summary": "Método PUT para atualizar o cadastro de um usuário através do ID",
         "description": "",
         "parameters": [
           {
@@ -169,6 +173,7 @@
         }
       },
       "delete": {
+        "summary": "Método DELETE para deletar um usuário através do seu ID",
         "description": "",
         "parameters": [
           {
