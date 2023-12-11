@@ -22,7 +22,7 @@ const SupplierManager = {
     getSuppliersByName: function (name) {
         return suppliersDatabase.filter(item => item.name.toUpperCase().startsWith(name.toUpperCase()));
     },
-    getSuppliersByBrand: function (mail) {
+    getSuppliersByMail: function (mail) {
         return suppliersDatabase.filter(item => item.mail === mail);
     },
     getSupplierById: function (id) {

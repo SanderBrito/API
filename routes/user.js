@@ -5,19 +5,20 @@ const Token = require('../utilities/Token');
 const User = require('../model/User');
 
 router.get('/', (req, res) => {
-    // #swagger.summary = 'Lista de usuarios'
+    // #swagger.summary = 'Método GET para listar usuários por nome ou e-mail'
     let userList = User.getAllUsers();
 
     if (req.query.name) {
         userList = User.getUsersByName(req.query.name);
     } else if (req.query.mail) {
-        userList = User.getUsersByBrand(req.query.mail);
+        userList = User.getUsersByMail(req.query.mail);
     }
 
     res.json({ count: userList.length, users: userList });
 });
 
 router.get('/:id', (req, res) => {
+    // #swagger.summary = 'Método para listar por ID'
     let user = User.getUserById(req.params.id);
 
     if (user) {
@@ -28,6 +29,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', Token.validateAccess, (req, res) => {
+     // #swagger.summary = 'Método PUT para cadastrar um usuário'
     let { name, mail, pass } = req.body;
 
     if (name && mail && pass) {
@@ -39,6 +41,7 @@ router.post('/', Token.validateAccess, (req, res) => {
 });
 
 router.put('/:id', Token.validateAccess, (req, res) => {
+    // #swagger.summary = 'Método PUT para atualizar o cadastro de um usuário através do ID'
     let { name, mail, pass } = req.body;
     let id = req.params.id;
 
@@ -56,6 +59,7 @@ router.put('/:id', Token.validateAccess, (req, res) => {
 });
 
 router.delete('/:id', Token.validateAccess, (req, res) => {
+    // #swagger.summary = 'Método DELETE para deletar um usuário através do seu ID'
     let id = req.params.id;
 
     if (User.deleteUser(id)) {

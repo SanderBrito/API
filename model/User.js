@@ -22,7 +22,7 @@ const UserManager = {
     getUsersByName: function (name) {
         return usersDatabase.filter(item => item.name.toUpperCase().startsWith(name.toUpperCase()));
     },
-    getUsersByBrand: function (mail) {
+    getUsersByMail: function (mail) {
         return usersDatabase.filter(item => item.mail === mail);
     },
     getUserById: function (id) {

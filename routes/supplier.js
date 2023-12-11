@@ -5,19 +5,20 @@ const Token = require('../utilities/Token');
 const Supplier = require('../model/Supplier');
 
 router.get('/', (req, res) => {
-    // #swagger.summary = 'Lista Impressora por cnpjo'
+    // #swagger.summary = 'Método GET para listar fornecedores por nome ou e-mail'
     let supplierList = Supplier.getAllSuppliers();
 
     if (req.query.name) {
         supplierList = Supplier.getSuppliersByName(req.query.name);
     } else if (req.query.mail) {
-        supplierList = Supplier.getSuppliersByBrand(req.query.mail);
+        supplierList = Supplier.getSuppliersByMail(req.query.mail);
     }
 
     res.json({ count: supplierList.length, suppliers: supplierList });
 });
 
 router.get('/:id', (req, res) => {
+     // #swagger.summary = 'Método para listar por ID'
     let supplier = Supplier.getSupplierById(req.params.id);
 
     if (supplier) {
@@ -28,6 +29,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', Token.validateAccess, (req, res) => {
+     // #swagger.summary = 'Método PUT para cadastrar um fornecedor'
     let { name, mail, cnpj } = req.body;
 
     if (name && mail && cnpj) {
@@ -39,6 +41,7 @@ router.post('/', Token.validateAccess, (req, res) => {
 });
 
 router.put('/:id', Token.validateAccess, (req, res) => {
+    // #swagger.summary = 'Método PUT para atualizar o cadastro de um fornecedor através do ID'
     let { name, mail, cnpj } = req.body;
     let id = req.params.id;
 
@@ -56,6 +59,7 @@ router.put('/:id', Token.validateAccess, (req, res) => {
 });
 
 router.delete('/:id', Token.validateAccess, (req, res) => {
+    // #swagger.summary = 'Método DELETE para deletar um fornecedor através do seu ID'
     let id = req.params.id;
 
     if (Supplier.deleteSupplier(id)) {

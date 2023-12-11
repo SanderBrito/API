@@ -5,7 +5,7 @@ const Token = require('../utilities/Token');
 const Printer = require('../model/Printer');
 
 router.get('/', (req, res) => {
-    // #swagger.summary = 'Listagem Impressoras por modelo'
+    // #swagger.summary = 'Método GET para listar impressoras por nome ou marca'
     let printerList = Printer.getAllPrinters();
 
     if (req.query.name) {
@@ -18,6 +18,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
+    // #swagger.summary = 'Método para listar por ID'
     let printer = Printer.getPrinterById(req.params.id);
 
     if (printer) {
@@ -28,6 +29,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', Token.validateAccess, (req, res) => {
+    // #swagger.summary = 'Método PUT para cadastrar uma impressora'
     let { name, brand, model } = req.body;
 
     if (name && brand && model) {
@@ -39,6 +41,7 @@ router.post('/', Token.validateAccess, (req, res) => {
 });
 
 router.put('/:id', Token.validateAccess, (req, res) => {
+    // #swagger.summary = 'Método PUT para atualizar o cadastro de uma impressoras através do ID'
     let { name, brand, model } = req.body;
     let id = req.params.id;
 
@@ -56,6 +59,7 @@ router.put('/:id', Token.validateAccess, (req, res) => {
 });
 
 router.delete('/:id', Token.validateAccess, (req, res) => {
+    // #swagger.summary = 'Método DELETE para deletar uma impressoras através do seu ID'
     let id = req.params.id;
 
     if (Printer.deletePrinter(id)) {
