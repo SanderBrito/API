@@ -7,9 +7,12 @@
     "swagger-autogen": "node swagger.js"
   },
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "~4.16.1",
     "json": "^11.0.0",
     "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.0.3",
     "nodemon": "^2.0.22",
     "swagger": "^0.7.5",
     "swagger-autogen": "^2.23.7",

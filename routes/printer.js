@@ -30,6 +30,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/', Token.validateAccess, (req, res) => {
     // #swagger.summary = 'Método PUT para cadastrar uma impressora'
+    /*
     let { name, brand, model } = req.body;
 
     if (name && brand && model) {
@@ -38,7 +39,10 @@ router.post('/', Token.validateAccess, (req, res) => {
     } else {
         res.status(400).json({ message: "Erro ao cadastrar a impressora" });
     }
+    */
+   Printer.createPrinter()
 });
+
 
 router.put('/:id', Token.validateAccess, (req, res) => {
     // #swagger.summary = 'Método PUT para atualizar o cadastro de uma impressoras através do ID'
@@ -58,7 +62,7 @@ router.put('/:id', Token.validateAccess, (req, res) => {
     }
 });
 
-router.delete('/:id', Token.validateAccess, (req, res) => {
+router.delete('/:id', Token.validateAccess, async (req, res) => {
     // #swagger.summary = 'Método DELETE para deletar uma impressoras através do seu ID'
     let id = req.params.id;
 
@@ -67,6 +71,7 @@ router.delete('/:id', Token.validateAccess, (req, res) => {
     } else {
         res.status(400).json({ message: "Falha ao excluir o registro" });
     }
+
 });
 
 module.exports = router;

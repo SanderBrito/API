@@ -1,50 +1,97 @@
-let printerCounter = 0;
-let printersDatabase = [];
+const Printer = require('../controller/printer')
 
-const PrinterManager = {
-    createPrinter: function (name, brand, model) {
-        let newPrinter = { id: ++printerCounter, name, brand, model };
-        printersDatabase.push(newPrinter);
-        return newPrinter;
-    },
-    updatePrinter: function (id, name, brand, model) {
-        let index = this.getIndexById(id);
-        if (index >= 0) {
-            let updatedPrinter = { id: parseInt(id), name, brand, model };
-            printersDatabase[index] = updatedPrinter;
-            return updatedPrinter;
-        }
-        return null;
-    },
-    getAllPrinters: function () {
-        return printersDatabase;
-    },
-    getPrintersByName: function (name) {
-        return printersDatabase.filter(item => item.name.toUpperCase().startsWith(name.toUpperCase()));
-    },
-    getPrintersByBrand: function (brand) {
-        return printersDatabase.filter(item => item.brand === brand);
-    },
-    getPrinterById: function (id) {
-        let index = this.getIndexById(id);
-        return index >= 0 ? printersDatabase[index] : null;
-    },
-    getIndexById: function (id) {
-        for (let i = 0; i < printersDatabase.length; i++) {
-            if (printersDatabase[i].id == id) {
-                return i;
-            }
-        }
-        return -1;
-    },
-    deletePrinter: function (id) {
-        let index = this.getIndexById(id);
-        if (index >= 0) {
-            printersDatabase.splice(index, 1);
-            return true;
-        }
-        return false;
+const createPrinter = async (req, res) =>{   
+    console.log(req.body.name_printer)
+    const name_printer = req.body.name_printer;
+    const brand_printer = req.body.brand_printer;
+    const model_printer = req.body.model_printer;
+    const printer ={
+        name_printer,
+        brand_printer,
+        model_printer,
     }
-};
+    try{
+        await Printer.create(printer)
 
-module.exports = PrinterManager;
+        res.status(201).json({message: "impressora cadastrada com sucesso!"})
+
+    }catch (error) {
+        res.status(500).json({error: error})
+    }
+}
+
+const findPrinter = async (req, res) =>{
+    try {
+        const printer = await Printer.find()
+        return printer
+
+    } catch (error) {
+        res.status(500).json({ error: error})
+    }
+}
+
+const findOnlyPrinter = async (req, res) =>{
+    const name_printer = req.body
+    console.log(name_printer)
+
+    try {
+        const printer = await Printer.findOne({ name_printer: name_printer })
+
+        if(!printer) {
+            res.status(422).json({ message: 'impressora não encontrada!'})
+        }
+        return printer
+        
+    } catch (error) {
+        res.status(500).json({ error: error})
+    }
+}
+
+
+const updatePrinter = async (req, res) =>{
+    const {name_printer, brand_printer, model_printer} = req.body
+
+
+    const colecao = {
+        name_printer,
+        brand_printer,
+        model_printer,        
+    }
+
+    try {
+        const updatePrinter = await Printer.updateOne({ _id: req.params.id }, printer)
+
+        res.status(200).json({message: 'Cadastro Atualizado'})
+        
+    } catch (error) {
+        res.status(500).json({ error: error})
+    }
+}
+
+
+
+const deletePrinter = async (req, res) =>{
+
+    const printer = await Printer.findOne({ _id: req.params.id })
+    if(!printer){
+        res.status(422).json({ message: 'impressora não encontrada!' })
+        return
+    }
+
+    try{
+        await Printer.deleteOne({_id: req.params.id})
+
+        res.status(200).json({ message: 'impressora deletada!' })
+    }catch(error){
+        res.status(500).json({ error: error })
+    }
+
+}
+
+module.exports ={
+    createPrinter,
+    findPrinter,
+    findOnlyPrinter,
+    updatePrinter,
+    deletePrinter
+}
