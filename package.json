@@ -26,5 +26,13 @@
   "devDependencies": {
     "mocha": "^2.5.3"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SanderBrito/API.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SanderBrito/API/issues"
+  },
+  "homepage": "https://github.com/SanderBrito/API#readme",
   "description": ""
 }

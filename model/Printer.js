@@ -52,7 +52,7 @@ const updatePrinter = async (req, res) =>{
     const {name_printer, brand_printer, model_printer} = req.body
 
 
-    const colecao = {
+    const printer = {
         name_printer,
         brand_printer,
         model_printer,        
