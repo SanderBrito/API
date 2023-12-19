@@ -5,8 +5,15 @@ const Token = require('../utilities/Token');
 const Printer = require('../model/Printer');
 
 router.get('/', async (req, res) =>{
-    const printer = await Printer.findPrinter()
-    res.json(printer)
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.perPage) || 15;
+    
+    try {
+        const printer = await Printer.findPrinter(page, perPage);
+        res.json(printer);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 })
 router.post('/', Token.validateAccess, Printer.createPrinter)
 router.delete('/:id', Printer.deletePrinter)

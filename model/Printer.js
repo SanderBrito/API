@@ -1,4 +1,5 @@
 const Printer = require('../controller/printer')
+const ITEMS_PER_PAGE = 15;
 
 const createPrinter = async (req, res) =>{   
     console.log(req.body.name_printer)
@@ -20,9 +21,11 @@ const createPrinter = async (req, res) =>{
     }
 }
 
-const findPrinter = async (req, res) =>{
+const findPrinter = async (page = 1, perPage = ITEMS_PER_PAGE) => {
     try {
         const printer = await Printer.find()
+        .skip((page - 1) * perPage)
+        .limit(perPage);
         return printer
 
     } catch (error) {
