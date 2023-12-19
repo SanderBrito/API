@@ -20,6 +20,46 @@ const createUser = async (req, res) =>{
         res.status(500).json({error: error})
     }
 }
+const carregaUser = async (req, res) =>{   
+    console.log(req.body.name_user)
+    const user1 ={
+        name_user: "joao",
+        mail_user:  "joao@joao.com",
+        pass_user:  "123321",
+    }
+    const user2 ={
+        name_user: "carlos",
+        mail_user: "carlos@carlos.com",
+        pass_user: "123321",
+    }
+    const user3 ={
+        name_user: "pedro",
+        mail_user: "pedro@pedro.com",
+        pass_user: "123321",
+    }
+    const user4 ={
+        name_user: "lucas",
+        mail_user: "lucas@lucas.com",
+        pass_user: "123321",
+    }
+    const user5 ={
+        name_user: "marcelo",
+        mail_user: "marcelo@marcelo.com",
+        pass_user: "123321",
+    }
+    try{
+        await User.create(user1)
+        await User.create(user2)
+        await User.create(user3)
+        await User.create(user4)
+        await User.create(user5)
+
+        res.status(201).json({message: "usuários cadastrados com sucesso!"})
+
+    }catch (error) {
+        res.status(500).json({error: error})
+    }
+}
 
 const findUser = async (page = 1, perPage = ITEMS_PER_PAGE) => {
     try {
@@ -96,5 +136,6 @@ module.exports ={
     findUser,
     findOnlyUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    carregaUser
 }

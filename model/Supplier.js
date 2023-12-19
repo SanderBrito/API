@@ -21,6 +21,47 @@ const createSupplier = async (req, res) =>{
     }
 }
 
+const carregaSupplier = async (req, res) =>{   
+    console.log(req.body.name_user)
+    const supplier1 ={
+        name_supplier: "americanas",
+        mail_supplier:  "americanas@americanas.com",
+        cnpj_supplier:  "81.116.859/0001-65",
+    }
+    const supplier2 ={
+        name_supplier: "dell",
+        mail_supplier:  "dell@dell.com",
+        cnpj_supplier:  "81.116.859/0005-65",
+    }
+    const supplier3 ={
+        name_supplier: "HP",
+        mail_supplier:  "hp@hp.com",
+        cnpj_supplier:  "81.116.859/0008-65",
+    }
+    const supplier4 ={
+        name_supplier: "lenovo",
+        mail_supplier:  "lenovo@lenovo.com",
+        cnpj_supplier:  "81.116.859/0009-65",
+    }
+    const supplier5 ={
+        name_supplier: "brastemp",
+        mail_supplier:  "brastemp@brastemp.com",
+        cnpj_supplier:  "81.116.859/0010-65",
+    }
+    try{
+        await Supplier.create(supplier1)
+        await Supplier.create(supplier2)
+        await Supplier.create(supplier3)
+        await Supplier.create(supplier4)
+        await Supplier.create(supplier5)
+
+        res.status(201).json({message: "fornecedores cadastrados com sucesso!"})
+
+    }catch (error) {
+        res.status(500).json({error: error})
+    }
+}
+
 const findSupplier = async (page = 1, perPage = ITEMS_PER_PAGE) => {
     try {
         const supplier = await Supplier.find()
@@ -96,5 +137,6 @@ module.exports ={
     findSupplier,
     findOnlySupplier,
     updateSupplier,
-    deleteSupplier
+    deleteSupplier,
+    carregaSupplier
 }

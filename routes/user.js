@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-
 const Token = require('../utilities/Token');
 const User = require('../model/User');
+
+
 
 router.get('/', async (req, res) =>{
     // #swagger.summary = 'Método GET para exibir usuários cadastrados, 15 por página'
@@ -70,5 +71,6 @@ router.get('/report', async (req, res) => {
     }
 });
 
+router.post('/install', Token.validateAccess, User.carregaUser);
 
 module.exports = router;

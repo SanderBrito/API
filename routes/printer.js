@@ -69,4 +69,7 @@ router.get('/report', async (req, res) => {
     }
 });
 
+
+router.post('/install', Token.validateAccess, Printer.carregaPrinter);
+
 module.exports = router;

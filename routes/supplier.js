@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const Token = require('../utilities/Token');
 const Supplier = require('../model/Supplier');
 
@@ -69,5 +68,6 @@ router.get('/report', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+router.post('/install', Token.validateAccess, Supplier.carregaSupplier);
 
 module.exports = router;
