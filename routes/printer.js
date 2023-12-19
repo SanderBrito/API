@@ -5,6 +5,7 @@ const Token = require('../utilities/Token');
 const Printer = require('../model/Printer');
 
 router.get('/', async (req, res) =>{
+    // #swagger.summary = 'Método GET para exibir impressoras cadastradas, 15 por página'
     const page = parseInt(req.query.page) || 1;
     const perPage = parseInt(req.query.perPage) || 15;
     
@@ -35,6 +36,36 @@ router.put('/:id', Token.validateAccess, (req, res) => {
         }
     } else {
         res.status(400).json({ message: "Falha ao alterar o registro na impressora" });
+    }
+});
+
+router.get('/report', async (req, res) => {
+    // #swagger.summary = 'Método GET para exibir relatório de impressoras por marca'
+    try {
+        const printers = await Printer.findPrinter();
+
+        if (!printers || printers.length === 0) {
+            return res.status(404).json({ message: 'Nenhuma impressora encontrada para exibir.' });
+        }
+
+        const report = {};
+
+        printers.forEach(printer => {
+            const brand = printer.brand_printer;
+
+            if (!report[brand]) {
+                report[brand] = [];
+            }
+
+            report[brand].push({
+                Name: printer.name_printer,
+                Model: printer.model_printer,
+            });
+        });
+
+        res.json(report);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 

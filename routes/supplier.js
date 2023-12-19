@@ -5,6 +5,7 @@ const Token = require('../utilities/Token');
 const Supplier = require('../model/Supplier');
 
 router.get('/', async (req, res) =>{
+    // #swagger.summary = 'Método GET para exibir fornecedores cadastrados, 15 por página'
     const page = parseInt(req.query.page) || 1;
     const perPage = parseInt(req.query.perPage) || 15;
     
@@ -35,6 +36,37 @@ router.put('/:id', Token.validateAccess, (req, res) => {
         }
     } else {
         res.status(400).json({ message: "Falha ao alterar o registro no fornecedor" });
+    }
+});
+
+router.get('/report', async (req, res) => {
+    // #swagger.summary = 'Método GET para exibir relatório de fornecedores nome'
+    try {
+        const suppliers = await Supplier.findSupplier();
+
+        if (!suppliers || suppliers.length === 0) {
+            return res.status(404).json({ message: 'Nenhum fornecedor encontrado para exibir.' });
+        }
+
+        const report = {};
+
+        suppliers.forEach(supplier => {
+            const name = supplier.name_supplier;
+
+            if (!report[name]) {
+                report[name] = [];
+            }
+
+            report[name].push({
+                Name: supplier.name_supplier,
+                Email: supplier.mail_supplier,
+                CNPJ: supplier.cnpj_supplier,
+            });
+        });
+
+        res.json(report);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 

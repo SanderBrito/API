@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config()
 
+//app.use('/installer', installerRouter);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
