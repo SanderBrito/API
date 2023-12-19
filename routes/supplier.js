@@ -5,8 +5,15 @@ const Token = require('../utilities/Token');
 const Supplier = require('../model/Supplier');
 
 router.get('/', async (req, res) =>{
-    const supplier = await Supplier.findSupplier()
-    res.json(supplier)
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.perPage) || 15;
+    
+    try {
+        const supplier = await Supplier.findSupplier(page, perPage);
+        res.json(supplier);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 })
 router.post('/', Token.validateAccess, Supplier.createSupplier)
 router.delete('/:id', Supplier.deleteSupplier)

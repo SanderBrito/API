@@ -1,4 +1,5 @@
 const Supplier = require('../controller/supplier')
+const ITEMS_PER_PAGE = 15;
 
 const createSupplier = async (req, res) =>{   
     console.log(req.body.name_supplier)
@@ -20,9 +21,11 @@ const createSupplier = async (req, res) =>{
     }
 }
 
-const findSupplier = async (req, res) =>{
+const findSupplier = async (page = 1, perPage = ITEMS_PER_PAGE) => {
     try {
         const supplier = await Supplier.find()
+        .skip((page - 1) * perPage)
+        .limit(perPage);
         return supplier
 
     } catch (error) {

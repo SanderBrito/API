@@ -1,4 +1,5 @@
 const User = require('../controller/user')
+const ITEMS_PER_PAGE = 15;
 
 const createUser = async (req, res) =>{   
     console.log(req.body.name_user)
@@ -20,9 +21,11 @@ const createUser = async (req, res) =>{
     }
 }
 
-const findUser = async (req, res) =>{
+const findUser = async (page = 1, perPage = ITEMS_PER_PAGE) => {
     try {
         const user = await User.find()
+        .skip((page - 1) * perPage)
+        .limit(perPage);
         return user
 
     } catch (error) {

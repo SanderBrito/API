@@ -5,8 +5,15 @@ const Token = require('../utilities/Token');
 const User = require('../model/User');
 
 router.get('/', async (req, res) =>{
-    const user = await User.findUser()
-    res.json(user)
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.perPage) || 15;
+    
+    try {
+        const user = await User.findUser(page, perPage);
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 })
 router.post('/', Token.validateAccess, User.createUser)
 router.delete('/:id', User.deleteUser)
